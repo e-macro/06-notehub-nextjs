@@ -29,20 +29,25 @@ const NoteListClient= () => {
     queryKey: ['notes', debouncedQuery, page],
     queryFn: () => fetchNotes(page, debouncedQuery),
     placeholderData: keepPreviousData,
-  })
+  });
+
+  // if (error) throw error;
+  // if (!data?.notes) throw new Error('Could not fetch the list of notes.');
+
   const totalPages = data?.totalPages || 0;
   return (
-  <>
-    <header className={css.toolbar}>
-        <SearchBox searchQuery={query} onUpdate={handleInputChange}/>
-        {totalPages> 1 && <Pagination totalPages={totalPages} page={page} setPage={setPage}/>}
-        <button className={css.button} onClick={openModal}>Create note +</button>
-    </header>
-    {isModalOpen && <Modal onClose={closeModal}>
-      <NoteForm onClose={closeModal}/>
-    </Modal>}
-    {data?.notes && <NoteList notes={data?.notes}/>}
-  </>)
+    <>
+      <header className={css.toolbar}>
+          <SearchBox searchQuery={query} onUpdate={handleInputChange}/>
+          {totalPages> 1 && <Pagination totalPages={totalPages} page={page} setPage={setPage}/>}
+          <button className={css.button} onClick={openModal}>Create note +</button>
+      </header>
+      {isModalOpen && <Modal onClose={closeModal}>
+        <NoteForm onClose={closeModal}/>
+      </Modal>}
+      {data?.notes && <NoteList notes={data?.notes}/>}
+    </>
+  );
 }
 
 export default NoteListClient;
