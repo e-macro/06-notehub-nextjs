@@ -26,9 +26,10 @@ const NoteListClient= () => {
     debouncedSetQuery(e.target.value)
   };
   const { data } = useQuery<NoteResponse>({
-    queryKey: ['notes', debouncedQuery, page],
+    queryKey: ['notes', {query: debouncedQuery, page: page}],
     queryFn: () => fetchNotes(page, debouncedQuery),
     placeholderData: keepPreviousData,
+    refetchOnMount: false,
   });
 
   // if (error) throw error;
